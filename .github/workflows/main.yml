@@ -51,8 +51,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Run ESLint
-      uses: stefanoeb/eslint-action@1.0.2
-      with:
-        files: src/
+
+    - name: Run eslint
+      uses: icrawl/action-eslint@v1    

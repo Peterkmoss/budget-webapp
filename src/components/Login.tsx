@@ -63,4 +63,4 @@ class Login extends Component<{}, LoginState> {
     }
 }
 
-export default Login
+export default Login;

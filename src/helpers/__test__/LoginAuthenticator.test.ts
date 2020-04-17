@@ -3,11 +3,11 @@ import { LoginAuthenticator } from '../LoginAuthenticator'
 
 describe('Login authenticator tests', () => {
     let user: IUser
-    const correct = 'Test'
+    const correct = 'Peter1234'
     const incorrect = 'Tset'
 
     beforeEach(() => {
-        user = new User('Test', [], '')
+        user = new User('peter', [], '')
     })
 
     it('Returns a user when loggin in with the correct credentials', () => {

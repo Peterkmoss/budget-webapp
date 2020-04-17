@@ -7,16 +7,11 @@ describe('Login authenticator tests', () => {
     const incorrect = 'Tset'
 
     beforeEach(() => {
-        user = new User({
-            username: 'Test',
-            budgets: [],
-            categories: []
-        })
+        user = new User('Test', [], '')
     })
 
     it('Returns a user when loggin in with the correct credentials', () => {
-        const authenticator = new LoginAuthenticator()
-
-        expect(authenticator.login(user.username, correct)).toBeDefined()
+        expect.assertions(1)
+        return (LoginAuthenticator.login(user.username, correct).then(response => expect(response).toBeInstanceOf(User)))
     })
 })

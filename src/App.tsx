@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
 import Login from './components/Login'
-import { IUser, User } from './models/User';
 import {
   BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom';
-import Profile from './components/Profile';
 import { CookiesProvider, Cookies } from 'react-cookie';
+import Budgets from './components/Budget';
+
+export const cookies = new Cookies()
 
 interface AppState {
-  user: IUser
   cookies: Cookies
 }
 
@@ -19,8 +19,7 @@ class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props)
     this.state = {
-      user: new User(''),
-      cookies: new Cookies()
+      cookies: cookies
     }
   }
 
@@ -30,11 +29,14 @@ class App extends Component<{}, AppState> {
         <CookiesProvider>
           <div>
             <Switch>
-              <Route exact path='/login'>
-                <Login cookies={this.state.cookies}/>
+              <Route exact path='/'>
+                Home
               </Route>
-              <Route exact path='/profile'>
-                <Profile cookies={this.state.cookies} />
+              <Route exact path='/login'>
+                <Login />
+              </Route>
+              <Route exact path='/budgets'>
+                <Budgets />
               </Route>
             </Switch>
           </div>

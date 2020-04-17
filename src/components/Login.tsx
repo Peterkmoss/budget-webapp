@@ -5,11 +5,7 @@ import { IUser } from '../models/User';
 import {
     Redirect
 } from 'react-router-dom'
-import { Cookies } from 'react-cookie'
-
-interface LoginProps {
-    cookies: Cookies
-}
+import { cookies } from '../App';
 
 interface LoginState {
     username: string
@@ -17,8 +13,8 @@ interface LoginState {
     redirect: boolean
 }
 
-class Login extends Component<LoginProps, LoginState> {
-    constructor(props: LoginProps) {
+class Login extends Component<{}, LoginState> {
+    constructor(props: {}) {
         super(props)
         this.state = {
             username: '',
@@ -34,23 +30,22 @@ class Login extends Component<LoginProps, LoginState> {
     login() {
         LoginAuthenticator.login(this.state.username, this.state.password, (usr?: IUser) => {
             if (usr) {
-                this.props.cookies.set('user', usr)
+                cookies.set('user', usr)
                 this.setState({redirect: true})
+            }
+            else {
+                alert('Invalid credentials')
             }
         })
     }
 
-    handleUsernameChange(e: any) {
-        this.setState({ username: e.target.value })
-    }
+    handleUsernameChange = (e: any) => this.setState({ username: e.target.value })
 
-    handlePasswordChange(e: any) {
-        this.setState({ password: e.target.value })
-    }
+    handlePasswordChange = (e: any) => this.setState({ password: e.target.value })
 
     redirect() {
         if (this.state.redirect)
-            return <Redirect to='/profile' />
+            return <Redirect to='/budgets' />
     }
 
     render(): JSX.Element {

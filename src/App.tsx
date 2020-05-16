@@ -1,39 +1,44 @@
 import React, {Component} from 'react'
-import {BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar} from 'recharts'
 import './App.css'
-import {getCategories} from './helpers/database';
-import Category from './models/Category';
+import BarChart from './charts/BarChart'
+import {addCategory} from './helpers/database'
+import Category from './models/Category'
 
 interface AppState {
-    data?: Category[]
+    name: string
+    value: number
 }
+
 
 class App extends Component<{}, AppState> {
     constructor(props: {}) {
         super(props)
         this.state = {
-            data: undefined
+            name: "",
+            value: 0
         }
     }
 
-    componentDidMount() {
-        getCategories().then(categories => this.setState({data: categories}))
+    handleClick() {
+        const name = (document.getElementById('catname') as HTMLInputElement).value
+        const value = Number.parseInt((document.getElementById('catvalue') as HTMLInputElement).value)
+
+        const category: Category = {
+            name: name,
+            value: value
+        }
+
+        addCategory(category)
     }
 
     render = () => {
         return (
             <div>
-                <nav>
-                </nav>
                 <main>
-                    <BarChart width={730} height={250} data={this.state.data}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="test" fill="#8884d8" />
-                    </BarChart>
+                    <input type='text' id='catname' placeholder='name' />
+                    <input type='text' id='catvalue' placeholder='value' />
+                    <button onClick={this.handleClick}>Add category</button>
+                    <BarChart />
                 </main>
             </div>
         );

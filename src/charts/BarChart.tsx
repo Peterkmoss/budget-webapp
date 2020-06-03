@@ -1,26 +1,34 @@
 import React, {Component} from 'react'
-import {getCategories} from '../helpers/database'
 import Chart from 'react-apexcharts'
+import Category from '../models/Category';
+import {getCategories} from '../helpers/database';
 
 interface ChartState {
+    categories: Category[]
     series: any[]
     options: any
 }
 
-export default class BarChart extends Component<{}, ChartState> {
-    constructor(props: {}) {
+interface ChartProps {
+    categories: Category[]
+}
+
+export default class BarChart extends Component<ChartProps, ChartState> {
+    constructor(props: ChartProps) {
         super(props)
+
         this.state = {
-            options: {},
-            series: []
+            categories: this.props.categories,
+            series: [],
+            options: {}
         };
     }
 
     componentDidMount() {
-        getCategories().then(categories => {
+        getCategories().then(categories =>
             this.setState({
                 series: [{
-                    name: "Categories", 
+                    name: "Categories",
                     data: categories.map(category => category.value)
                 }],
                 options: {
@@ -28,8 +36,7 @@ export default class BarChart extends Component<{}, ChartState> {
                         categories: categories.map(category => category.name)
                     }
                 }
-            })
-        })
+            }))
     }
 
     render() {
